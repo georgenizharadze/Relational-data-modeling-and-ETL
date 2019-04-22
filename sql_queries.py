@@ -10,28 +10,53 @@ time_table_drop = "DROP TABLE IF EXISTS time;"
 
 songplay_table_create = """
 	CREATE TABLE IF NOT EXISTS songplays
-	(songplay_id smallserial PRIMARY KEY, start_time timestamp NOT NULL, user_id int NOT NULL, level text, 
-	song_id text, artist_id text, session_id int, location text, user_agent text);
+	(songplay_id smallserial PRIMARY KEY, 
+	 start_time timestamp NOT NULL, 
+	 user_id int NOT NULL, 
+	 level text, 
+	 song_id text, 
+	 artist_id text, 
+	 session_id int, 
+	 location text, 
+	 user_agent text);
 """
 
 time_table_create = """
 	CREATE TABLE IF NOT EXISTS time
-	(start_time timestamp, hour int, day int, week int, month int, year int, weekday int);
+	(start_time timestamp PRIMARY KEY, 
+	 hour int, 
+	 day int, 
+	 week int, 
+	 month int, 
+	 year int, 
+	 weekday int);
 """
 
 user_table_create = """
 	CREATE TABLE IF NOT EXISTS users
-	(user_id int PRIMARY KEY, first_name text, last_name text, gender character(1), level text);
+	(user_id int PRIMARY KEY, 
+	 first_name text, 
+	 last_name text, 
+	 gender character(1), 
+	 level text);
 """
 
 song_table_create = """
 	CREATE TABLE IF NOT EXISTS songs
-	(song_id text PRIMARY KEY, title text NOT NULL, artist_id text, year int, duration numeric);
+	(song_id text PRIMARY KEY, 
+	 title text NOT NULL, 
+	 artist_id text, 
+	 year int, 
+	 duration numeric);
 """
 
 artist_table_create = """
 	CREATE TABLE IF NOT EXISTS artists
-	(artist_id text PRIMARY KEY, name text NOT NULL, location text, lattitude numeric, longitude numeric);
+	(artist_id text PRIMARY KEY, 
+	 name text NOT NULL, 
+	 location text, 
+	 lattitude numeric, 
+	 longitude numeric);
 """
 
 
@@ -39,7 +64,8 @@ artist_table_create = """
 
 songplay_table_insert = """
 	INSERT INTO songplays
-	(start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
+	(start_time, user_id, level, song_id, artist_id, session_id, location, 
+	 user_agent)
 	VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
 """
 
@@ -71,7 +97,9 @@ artist_table_insert = """
 time_table_insert = """
 	INSERT INTO time
 	(start_time, hour, day, week, month, year, weekday)
-	VALUES (%s, %s, %s, %s, %s, %s, %s);
+	VALUES (%s, %s, %s, %s, %s, %s, %s)
+	ON CONFLICT (start_time)
+	DO NOTHING;
 """
 
 # FIND SONGS
